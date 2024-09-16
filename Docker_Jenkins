@@ -1,0 +1,27 @@
+# Use an official Ubuntu base image
+FROM ubuntu:20.04
+
+# Set environment variables to non-interactive (to avoid prompts during package installation)
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install Java (OpenJDK) and other dependencies
+RUN apt-get update && \
+    apt-get install -y openjdk-11-jdk wget && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Set environment variable for JAVA_HOME
+#ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64
+
+WORKDIR /usr/share/jenkins
+# Download the Jenkins WAR file
+RUN wget https://get.jenkins.io/war/2.413/jenkins.war -O /usr/share/jenkins/jenkins.war
+
+# Create a directory for JenkiRUN mkdir -p /var/jenkins_home
+
+# Expose ports used by Jenkins
+EXPOSE 8080
+EXPOSE 50000
+
+# Define the command to run Jenkins
+CMD ["java", "-jar", "/usr/share/jenkins/jenkins.war"]
