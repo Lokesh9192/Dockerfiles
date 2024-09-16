@@ -1,0 +1,8 @@
+FROM ubuntu:latest
+RUN apt-get update -y && apt install maven -y && apt-get install git -y
+RUN git clone https://github.com/Lokesh9192/Maven-WebApplication.git
+WORKDIR /Maven-WebApplication
+RUN mvn clean package
+
+FROM tomcat:8.0.20-jre8
+COPY target/maven-web-app.war /usr/local/tomcat/webapps/maven-web-app.war
