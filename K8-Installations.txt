@@ -26,6 +26,9 @@ In Master node
 =================
 1. sudo kubeadm init
 2. mkdir -p $HOME/.kube
+   sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+   sudo chown $(id -u):$(id -g) $HOME/.kube/config
+   export KUBECONFIG=/etc/kubernetes/admin.conf
 3. kubeclt get nodes --> to check Master ready or not( Unready )
 4. systemctl daemon-reload
 5. systemctl start kubelet
